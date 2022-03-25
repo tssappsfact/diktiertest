@@ -5,4 +5,10 @@
         <attr name="exampleColor" format="color" />
         <attr name="exampleDrawable" format="color|reference" />
     </declare-styleable>
+    <declare-styleable name="MyView">
+        <attr name="exampleStringa" format="string" />
+        <attr name="exampleDimensiona" format="dimension" />
+        <attr name="exampleColora" format="color" />
+        <attr name="exampleDrawablea" format="color|reference" />
+    </declare-styleable>
 </resources>

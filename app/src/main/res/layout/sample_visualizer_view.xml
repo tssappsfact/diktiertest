@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="1000dp"
     android:layout_alignParentBottom="true"
+    android:orientation="vertical"
     android:background="#231f20" >
 
     <com.example.diktier_apptest.VisualizerView
         android:id="@+id/visualizer"
-        android:layout_width="220dp"
+        android:layout_width="320dp"
         android:layout_height="75dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="5dp" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/txtRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:gravity="center"
+        android:text="Stop Recording"
+        android:textColor="@android:color/white"
+        android:textSize="30sp" />
+
+    <com.example.diktier_apptest.MyView
+        android:id="@+id/myViewVisu"
+        android:layout_width="220dp"
+        android:layout_height="500dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:layout_alignTop="@+id/txtRecord"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

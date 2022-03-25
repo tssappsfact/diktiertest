@@ -12,23 +12,28 @@ import android.view.View
 /**
  * TODO: document your custom view class.
  */
-class VisualizerView : View {
+class MyView : View {
 
     private val MAX_AMPLITUDE = 32767
 
     private lateinit var amplitudes: FloatArray
     private lateinit var vectors: FloatArray
-    private var insertIdx = 0
-    private var pointPaint: Paint? = null
+    private var recPaint: Paint? = null
     private var linePaint: Paint? = null
+    private var ovalPaint: Paint? = null
+    var scaledHeight = 0f
 
     constructor(context: Context?, attrs: AttributeSet?): super(context, attrs) {
+        recPaint = Paint()
+        recPaint!!.color = Color.BLACK
+        recPaint!!.strokeWidth = 20f
         linePaint = Paint()
         linePaint!!.color = Color.GREEN
-        linePaint!!.strokeWidth = 1f
-        pointPaint = Paint()
-        pointPaint!!.color = Color.BLUE
-        pointPaint!!.strokeWidth = 1f
+        linePaint!!.strokeWidth = 300f
+        ovalPaint = Paint().apply {
+            color = Color.GREEN
+            strokeWidth = 50f
+        }
     }
 
     override fun onSizeChanged(width: Int, h: Int, oldw: Int, oldh: Int) {
@@ -41,21 +46,21 @@ class VisualizerView : View {
      */
     fun addAmplitude(amplitude: Int) {
         invalidate()
-        val scaledHeight = amplitude.toFloat() / MAX_AMPLITUDE * (height - 1)
-        var ampIdx = insertIdx * 2
-        amplitudes[ampIdx++] = insertIdx.toFloat() // x
-        amplitudes[ampIdx] = scaledHeight // y
-        var vectorIdx = insertIdx * 4
-        vectors[vectorIdx++] = insertIdx.toFloat() // x0
+        scaledHeight = amplitude.toFloat() / MAX_AMPLITUDE * (height - 1)
+        if(amplitude.toFloat() >= 0.2 * MAX_AMPLITUDE)
+            ovalPaint?.color = Color.RED
+        else
+            ovalPaint?.color = Color.GREEN
+        var vectorIdx = 0
+        vectors[vectorIdx++] = 0f // x0
         vectors[vectorIdx++] = 0f // y0
-        vectors[vectorIdx++] = insertIdx.toFloat() // x1
+        vectors[vectorIdx++] = 0f // x1
         vectors[vectorIdx] = scaledHeight // y1
-        // insert index must be shorter than screen width
-        insertIdx = if (++insertIdx >= width) 0 else insertIdx
     }
 
     override fun onDraw(canvas: Canvas) {
+        canvas.drawRect(0f,0f, width.toFloat(), height.toFloat(), recPaint!!)
         canvas.drawLines(vectors, linePaint!!)
-        canvas.drawPoints(amplitudes, pointPaint!!)
+        canvas.drawOval(500f-scaledHeight, 500f-scaledHeight, 500f+scaledHeight, 500f+scaledHeight,ovalPaint!!)
     }
 }
